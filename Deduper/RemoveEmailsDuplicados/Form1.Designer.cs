@@ -43,8 +43,10 @@
             this.ListBoxCaixas = new System.Windows.Forms.ListBox();
             this.CheckedListBoxPastas = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelComecarEm = new System.Windows.Forms.Label();
             this.NumeroComeco = new System.Windows.Forms.NumericUpDown();
+            this.ckbTodos = new System.Windows.Forms.CheckBox();
+            this.emailRemoverTxt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.NumeroComeco)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +63,7 @@
             // LabelProgresso
             // 
             this.LabelProgresso.AutoSize = true;
-            this.LabelProgresso.Location = new System.Drawing.Point(206, 266);
+            this.LabelProgresso.Location = new System.Drawing.Point(206, 257);
             this.LabelProgresso.Name = "LabelProgresso";
             this.LabelProgresso.Size = new System.Drawing.Size(54, 13);
             this.LabelProgresso.TabIndex = 27;
@@ -69,7 +71,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(206, 282);
+            this.progressBar1.Location = new System.Drawing.Point(206, 273);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(261, 23);
             this.progressBar1.TabIndex = 26;
@@ -77,7 +79,7 @@
             // LabelApagados
             // 
             this.LabelApagados.AutoSize = true;
-            this.LabelApagados.Location = new System.Drawing.Point(126, 308);
+            this.LabelApagados.Location = new System.Drawing.Point(126, 311);
             this.LabelApagados.Name = "LabelApagados";
             this.LabelApagados.Size = new System.Drawing.Size(13, 13);
             this.LabelApagados.TabIndex = 25;
@@ -86,7 +88,7 @@
             // LabelProcessados
             // 
             this.LabelProcessados.AutoSize = true;
-            this.LabelProcessados.Location = new System.Drawing.Point(126, 282);
+            this.LabelProcessados.Location = new System.Drawing.Point(126, 284);
             this.LabelProcessados.Name = "LabelProcessados";
             this.LabelProcessados.Size = new System.Drawing.Size(13, 13);
             this.LabelProcessados.TabIndex = 24;
@@ -104,7 +106,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 308);
+            this.label5.Location = new System.Drawing.Point(12, 311);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(83, 13);
             this.label5.TabIndex = 22;
@@ -113,7 +115,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 282);
+            this.label4.Location = new System.Drawing.Point(12, 284);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 13);
             this.label4.TabIndex = 21;
@@ -173,14 +175,14 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "Caixas de Email";
             // 
-            // label6
+            // labelComecarEm
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(392, 123);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 13);
-            this.label6.TabIndex = 29;
-            this.label6.Text = "Começar em";
+            this.labelComecarEm.AutoSize = true;
+            this.labelComecarEm.Location = new System.Drawing.Point(392, 123);
+            this.labelComecarEm.Name = "labelComecarEm";
+            this.labelComecarEm.Size = new System.Drawing.Size(66, 13);
+            this.labelComecarEm.TabIndex = 29;
+            this.labelComecarEm.Text = "Começar em";
             // 
             // NumeroComeco
             // 
@@ -195,27 +197,38 @@
             0,
             0,
             0});
-            this.NumeroComeco.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.NumeroComeco.Name = "NumeroComeco";
             this.NumeroComeco.Size = new System.Drawing.Size(78, 20);
             this.NumeroComeco.TabIndex = 30;
-            this.NumeroComeco.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            // 
+            // ckbTodos
+            // 
+            this.ckbTodos.AutoSize = true;
+            this.ckbTodos.Location = new System.Drawing.Point(380, 218);
+            this.ckbTodos.Name = "ckbTodos";
+            this.ckbTodos.Size = new System.Drawing.Size(56, 17);
+            this.ckbTodos.TabIndex = 31;
+            this.ckbTodos.Text = "Todos";
+            this.ckbTodos.UseVisualStyleBackColor = true;
+            this.ckbTodos.CheckedChanged += new System.EventHandler(this.ckbTodos_CheckedChanged);
+            // 
+            // emailRemoverTxt
+            // 
+            this.emailRemoverTxt.Location = new System.Drawing.Point(206, 305);
+            this.emailRemoverTxt.Name = "emailRemoverTxt";
+            this.emailRemoverTxt.Size = new System.Drawing.Size(261, 20);
+            this.emailRemoverTxt.TabIndex = 32;
+            this.emailRemoverTxt.Text = "@expressorodominas.com.br";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(483, 354);
+            this.Controls.Add(this.emailRemoverTxt);
+            this.Controls.Add(this.ckbTodos);
             this.Controls.Add(this.NumeroComeco);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.labelComecarEm);
             this.Controls.Add(this.ButtonParar);
             this.Controls.Add(this.LabelProgresso);
             this.Controls.Add(this.progressBar1);
@@ -256,8 +269,10 @@
         private System.Windows.Forms.ListBox ListBoxCaixas;
         private System.Windows.Forms.CheckedListBox CheckedListBoxPastas;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelComecarEm;
         private System.Windows.Forms.NumericUpDown NumeroComeco;
+        private System.Windows.Forms.CheckBox ckbTodos;
+        private System.Windows.Forms.TextBox emailRemoverTxt;
     }
 }
 

@@ -9,3 +9,13 @@ C:\Users\thais.maria.RODOMINAS\Documents\GitHub\SideProjects\Deduper\RemoveEmail
 C:\Users\thais.maria.RODOMINAS\Documents\GitHub\SideProjects\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.exe
 C:\Users\thais.maria.RODOMINAS\Documents\GitHub\SideProjects\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.pdb
 C:\Users\thais.maria.RODOMINAS\Documents\GitHub\SideProjects\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.csprojAssemblyReference.cache
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\bin\Release\RemoveEmailsDuplicados.exe.config
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\bin\Release\RemoveEmailsDuplicados.exe
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\bin\Release\RemoveEmailsDuplicados.pdb
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.csprojAssemblyReference.cache
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.csproj.ResolveComReference.cache
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.Form1.resources
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.Properties.Resources.resources
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.csproj.GenerateResource.cache
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.exe
+C:\Users\thais.maria.RODOMINAS\Documents\GitHub\RemoveEmailsDuplicados\Deduper\RemoveEmailsDuplicados\obj\Release\RemoveEmailsDuplicados.pdb

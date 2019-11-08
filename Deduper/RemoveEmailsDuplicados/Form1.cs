@@ -39,6 +39,9 @@ namespace RemoveEmailsDuplicados
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ///NumeroComeco.Visible = false;
+            //labelComecarEm.Visible = false;
+
             var folders = outlookNamespace.Folders;
 
             foreach (Outlook.Folder f in folders)
@@ -87,11 +90,12 @@ namespace RemoveEmailsDuplicados
             {
                 pastasSelecionadas.Add(item);
             }
-
+                        
             ButtonProcessar.Enabled = false;
             contApagados = 0;
             cont = 1;
             mailItemProcessor.CleanKeys();
+            mailItemProcessor.Blacklist.Add(emailRemoverTxt.Text);
             LabelApagados.Text = contApagados.ToString();
 
             thread = new Thread(ProcessarPastas);
@@ -116,8 +120,7 @@ namespace RemoveEmailsDuplicados
                     this.InvokeEx(f => f.LabelTotal.Text = (folder.Items.Count).ToString());
                     this.InvokeEx(f => f.LabelProgresso.Text = "Progresso em " + item);
                     cont = (int)NumeroComeco.Value;
-                    for (int i = folder.Items.Count - (int)NumeroComeco.Value; i > 0; i--) // para pessoas usarem no email atual
-                    //for (int i = 1; i < folder.Items.Count; i++) // para arquivos mortos
+                    for (int i = folder.Items.Count - (int)NumeroComeco.Value; i > 0; i--) // começa do mais recente
                     {
                         if (keepGoing)
                         {
@@ -153,6 +156,15 @@ namespace RemoveEmailsDuplicados
             this.InvokeEx(f => f.ButtonProcessar.Enabled = true);
             keepGoing = true;
         }
+
+        private void ckbTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < CheckedListBoxPastas.Items.Count; i++)
+            {
+                CheckedListBoxPastas.SetItemChecked(i, ckbTodos.Checked);
+            }
+        }
+
     }
 
     public static class ISynchronizeInvokeExtensions
