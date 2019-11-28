@@ -96,8 +96,7 @@ namespace RemoveEmailsDuplicados
         private void SetupParaComecar()
         {
             ButtonProcessar.Enabled = false;
-            contApagados = 0;
-            cont = 1;
+            cont = (int)NumeroComeco.Value;
             mailItemProcessor.CleanKeys();
             mailItemProcessor.Blacklist.Add(emailRemoverTxt.Text);
             LabelApagados.Text = contApagados.ToString();
@@ -112,13 +111,14 @@ namespace RemoveEmailsDuplicados
         private void ProcessarPastas()
         {
             int TotalEmails = 0;
+            decimal porcentagemApagada = 0;
             foreach (string nomePasta in pastasSelecionadas)
             {
                 if (Continuar)
                 {
                     var folder = pastasEmailSelecionado.Where(x => x.Name == nomePasta).FirstOrDefault();
 
-                    TotalEmails += folder.Items.Count;
+                    TotalEmails += folder.Items.Count- (int)NumeroComeco.Value;
 
                     SetupCadaPasta(TotalEmails, nomePasta);
                     
@@ -135,8 +135,10 @@ namespace RemoveEmailsDuplicados
                                     if (mailItemProcessor.ProcessMailItem(mailItem))
                                     {
                                         contApagados++;
-                                        this.InvokeEx(f => f.LabelApagados.Text = contApagados.ToString());
                                     }
+                                    porcentagemApagada = contApagados / TotalEmails;
+
+                                    this.InvokeEx(f => f.LabelApagados.Text = contApagados.ToString()+" ("+String.Format("{0:0 %}", porcentagemApagada) +")");
                                     this.InvokeEx(f => f.progressBar1.PerformStep());
                                 }
                             }
@@ -164,7 +166,6 @@ namespace RemoveEmailsDuplicados
             this.InvokeEx(f => f.progressBar1.Value = (int)NumeroComeco.Value);
             this.InvokeEx(f => f.LabelTotal.Text = TotalEmails.ToString());
             this.InvokeEx(f => f.LabelProgresso.Text = "Progresso em " + item);
-            cont = (int)NumeroComeco.Value;
         }
 
         private void ckbTodos_CheckedChanged(object sender, EventArgs e)
@@ -175,6 +176,10 @@ namespace RemoveEmailsDuplicados
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            thread.Abort();
+        }
     }
 
     public static class ISynchronizeInvokeExtensions
