@@ -27,21 +27,16 @@ namespace RemoveEmailsDuplicados
 
         Thread thread;
         int contApagados = 0;
-        bool keepGoing = true;
+        bool Continuar = true;
         int cont = 1;
 
         public Form1()
         {
             InitializeComponent();
-            progressBar1.Minimum = 0;
-            progressBar1.Step = 1;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ///NumeroComeco.Visible = false;
-            //labelComecarEm.Visible = false;
-
             var folders = outlookNamespace.Folders;
 
             foreach (Outlook.Folder f in folders)
@@ -63,13 +58,14 @@ namespace RemoveEmailsDuplicados
                     {
                         CheckedListBoxPastas.Items.Add(f.Name);
                         pastasEmailSelecionado.Add(f);
-                        EnumerateFolders(f);
+                        
+                        VerificaSubpastas(f);
                     }
                 }
             }
         }
 
-        private void EnumerateFolders(Outlook.Folder folder)
+        private void VerificaSubpastas(Outlook.Folder folder)
         {
             Outlook.Folders subPastas = folder.Folders;
             if (subPastas.Count > 0)
@@ -78,7 +74,7 @@ namespace RemoveEmailsDuplicados
                 {
                     CheckedListBoxPastas.Items.Add(subPasta.Name);
                     pastasEmailSelecionado.Add(subPasta);
-                    EnumerateFolders(subPasta);
+                    VerificaSubpastas(subPasta);
                 }
             }
         }
@@ -90,39 +86,45 @@ namespace RemoveEmailsDuplicados
             {
                 pastasSelecionadas.Add(item);
             }
-                        
+
+            SetupParaComecar();
+
+            thread = new Thread(ProcessarPastas);
+            thread.Start();
+        }
+
+        private void SetupParaComecar()
+        {
             ButtonProcessar.Enabled = false;
             contApagados = 0;
             cont = 1;
             mailItemProcessor.CleanKeys();
             mailItemProcessor.Blacklist.Add(emailRemoverTxt.Text);
             LabelApagados.Text = contApagados.ToString();
-
-            thread = new Thread(ProcessarPastas);
-            thread.Start();
+            progressBar1.Value = (int)NumeroComeco.Value;
         }
 
         private void ButtonParar_Click(object sender, EventArgs e)
         {
-            keepGoing = false;
+            Continuar = false;
         }
           
         private void ProcessarPastas()
         {
-            foreach (string item in pastasSelecionadas)
+            int TotalEmails = 0;
+            foreach (string nomePasta in pastasSelecionadas)
             {
-                if (keepGoing)
+                if (Continuar)
                 {
-                    var folder = pastasEmailSelecionado.Where(x => x.Name == item).FirstOrDefault();
+                    var folder = pastasEmailSelecionado.Where(x => x.Name == nomePasta).FirstOrDefault();
+
+                    TotalEmails += folder.Items.Count;
+
+                    SetupCadaPasta(TotalEmails, nomePasta);
                     
-                    this.InvokeEx(f => f.progressBar1.Maximum = folder.Items.Count);
-                    this.InvokeEx(f => f.progressBar1.Value = (int)NumeroComeco.Value);
-                    this.InvokeEx(f => f.LabelTotal.Text = (folder.Items.Count).ToString());
-                    this.InvokeEx(f => f.LabelProgresso.Text = "Progresso em " + item);
-                    cont = (int)NumeroComeco.Value;
                     for (int i = folder.Items.Count - (int)NumeroComeco.Value; i > 0; i--) // começa do mais recente
                     {
-                        if (keepGoing)
+                        if (Continuar)
                         {
                             cont++;
                             this.InvokeEx(f => f.LabelProcessados.Text = cont.ToString());
@@ -133,7 +135,6 @@ namespace RemoveEmailsDuplicados
                                     if (mailItemProcessor.ProcessMailItem(mailItem))
                                     {
                                         contApagados++;
-                                       // i--;
                                         this.InvokeEx(f => f.LabelApagados.Text = contApagados.ToString());
                                     }
                                     this.InvokeEx(f => f.progressBar1.PerformStep());
@@ -154,7 +155,16 @@ namespace RemoveEmailsDuplicados
                     break;
             }
             this.InvokeEx(f => f.ButtonProcessar.Enabled = true);
-            keepGoing = true;
+            Continuar = true;
+        }
+
+        private void SetupCadaPasta(int TotalEmails, string item)
+        {
+            this.InvokeEx(f => f.progressBar1.Maximum = TotalEmails);
+            this.InvokeEx(f => f.progressBar1.Value = (int)NumeroComeco.Value);
+            this.InvokeEx(f => f.LabelTotal.Text = TotalEmails.ToString());
+            this.InvokeEx(f => f.LabelProgresso.Text = "Progresso em " + item);
+            cont = (int)NumeroComeco.Value;
         }
 
         private void ckbTodos_CheckedChanged(object sender, EventArgs e)
