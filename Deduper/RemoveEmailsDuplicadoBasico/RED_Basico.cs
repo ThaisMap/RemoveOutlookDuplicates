@@ -173,7 +173,7 @@ namespace RemoveEmailsDuplicadoBasico
 
         private void RED_Basico_FormClosing(object sender, FormClosingEventArgs e)
         {
-            thread.Abort();
+            Continuar = false;
         }
     }
 

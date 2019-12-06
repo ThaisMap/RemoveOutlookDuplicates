@@ -96,11 +96,11 @@ namespace RemoveEmailsDuplicados
         private void SetupParaComecar()
         {
             ButtonProcessar.Enabled = false;
+            contApagados = 0;
             cont = (int)NumeroComeco.Value;
             mailItemProcessor.CleanKeys();
             mailItemProcessor.Blacklist.Add(emailRemoverTxt.Text);
             LabelApagados.Text = contApagados.ToString();
-            progressBar1.Value = (int)NumeroComeco.Value;
         }
 
         private void ButtonParar_Click(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace RemoveEmailsDuplicados
         private void ProcessarPastas()
         {
             int TotalEmails = 0;
-            decimal porcentagemApagada = 0;
+            double porcentagemApagada = 0.0;
             foreach (string nomePasta in pastasSelecionadas)
             {
                 if (Continuar)
@@ -136,15 +136,16 @@ namespace RemoveEmailsDuplicados
                                     {
                                         contApagados++;
                                     }
-                                    porcentagemApagada = contApagados / TotalEmails;
+                                    porcentagemApagada = ((double)contApagados / cont) *100;
 
-                                    this.InvokeEx(f => f.LabelApagados.Text = contApagados.ToString()+" ("+String.Format("{0:0 %}", porcentagemApagada) +")");
+                                    this.InvokeEx(f => f.LabelApagados.Text = contApagados.ToString()+" ("+ Math.Round(porcentagemApagada, 2)  + "%)");
                                     this.InvokeEx(f => f.progressBar1.PerformStep());
                                 }
                             }
                             catch (Exception e)
                             {
-                                MessageBox.Show(e.Message);
+                                if(Continuar)
+                                    MessageBox.Show(e.Message);
                             }
                         }
                         else
@@ -177,8 +178,8 @@ namespace RemoveEmailsDuplicados
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            thread.Abort();
+        {            
+                Continuar = false;
         }
     }
 

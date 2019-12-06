@@ -70,6 +70,7 @@ namespace RemoveEmailsDuplicados
             "postmaster",
             "sap basis infraestructura",
             "webmaster",
+            "nfe_s@riclan.com.br",
             "xml@danacosmeticos.com.br",
             
         };
