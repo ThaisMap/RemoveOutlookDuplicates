@@ -32,8 +32,8 @@ namespace RemoveEmailsDuplicadoBasico
 
         private string GetKeys(MailItem item)
         {
-            return String.Format("{0} {1} {2:yyyyMMddhhmmss}",
-                 item.SenderEmailAddress, item.Subject, item.SentOn);
+            return String.Format("{0} {1} {2} {3} {4:ddMMyyyyhhmmss}",
+                  item.SenderEmailAddress, item.Subject, item.To, item.CC, item.SentOn);
         }
     }
 }

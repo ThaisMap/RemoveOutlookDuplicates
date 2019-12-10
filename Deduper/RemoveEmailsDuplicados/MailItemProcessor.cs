@@ -32,8 +32,8 @@ namespace RemoveEmailsDuplicados
 
         private string GetKeys(MailItem item)
         {
-            return String.Format("{0} {1} {2:yyyyMMddhhmmss}",
-                 item.SenderEmailAddress, item.Subject, item.SentOn);
+            return String.Format("{0} {1} {2} {3} {4:ddMMyyyyhhmmss}",
+                 item.SenderEmailAddress, item.Subject, item.To, item.CC, item.SentOn);
         }
 
         public bool isBlackListed(MailItem item)
@@ -71,8 +71,7 @@ namespace RemoveEmailsDuplicados
             "sap basis infraestructura",
             "webmaster",
             "nfe_s@riclan.com.br",
-            "xml@danacosmeticos.com.br",
-            
+            "xml@danacosmeticos.com.br"            
         };
     }
 
