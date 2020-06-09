@@ -110,15 +110,15 @@ namespace RemoveEmailsDuplicados
           
         private void ProcessarPastas()
         {
-            int TotalEmails = 0;
             double porcentagemApagada = 0.0;
             foreach (string nomePasta in pastasSelecionadas)
             {
+                    int TotalEmails = 0;
                 if (Continuar)
                 {
                     var folder = pastasEmailSelecionado.Where(x => x.Name == nomePasta).FirstOrDefault();
 
-                    TotalEmails += folder.Items.Count- (int)NumeroComeco.Value;
+                    TotalEmails = folder.Items.Count;
 
                     SetupCadaPasta(TotalEmails, nomePasta);
                     
@@ -142,10 +142,10 @@ namespace RemoveEmailsDuplicados
                                     this.InvokeEx(f => f.progressBar1.PerformStep());
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
-                                if(Continuar)
-                                    MessageBox.Show(e.Message);
+                                //if(Continuar)
+                                //    MessageBox.Show(e.Message);
                             }
                         }
                         else
