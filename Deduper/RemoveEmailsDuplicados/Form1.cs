@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,6 +30,8 @@ namespace RemoveEmailsDuplicados
         int contApagados = 0;
         bool Continuar = true;
         int cont = 1;
+        List<string> Blacklist = new List<string>();
+        string BlacklistFileName = "Blacklist.txt";
 
         public Form1()
         {
@@ -43,6 +46,13 @@ namespace RemoveEmailsDuplicados
             {
                 ListBoxCaixas.Items.Add(f.Name);
             }
+
+            try
+            {
+                Blacklist.AddRange(File.ReadAllLines(BlacklistFileName));
+                mailItemProcessor.AddToBlacklist(Blacklist);
+            }
+            catch { }
         }
 
         private void ListBoxCaixas_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,8 +109,9 @@ namespace RemoveEmailsDuplicados
             contApagados = 0;
             cont = (int)NumeroComeco.Value;
             mailItemProcessor.CleanKeys();
-            mailItemProcessor.Blacklist.Add(emailRemoverTxt.Text);
             LabelApagados.Text = contApagados.ToString();
+            if(emailRemoverTxt.Text != "@expressorodominas.com.br")
+                mailItemProcessor.AddToBlacklist(emailRemoverTxt.Text);
         }
 
         private void ButtonParar_Click(object sender, EventArgs e)
@@ -118,7 +129,7 @@ namespace RemoveEmailsDuplicados
                 {
                     var folder = pastasEmailSelecionado.Where(x => x.Name == nomePasta).FirstOrDefault();
 
-                    TotalEmails = folder.Items.Count;
+                    TotalEmails += folder.Items.Count;
 
                     SetupCadaPasta(TotalEmails, nomePasta);
                     
@@ -180,6 +191,28 @@ namespace RemoveEmailsDuplicados
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {            
                 Continuar = false;
+        }
+
+        private void ButtonBlacklist_Click(object sender, EventArgs e)
+        {
+            if (DialogListaNegra.ShowDialog() == DialogResult.OK)
+            {
+                string[] linhasLidas = File.ReadAllLines(DialogListaNegra.FileName);
+                Blacklist.AddRange(linhasLidas);
+                File.AppendAllLines(BlacklistFileName, linhasLidas);
+            }
+            mailItemProcessor.AddToBlacklist(Blacklist);
+        }
+
+        private void BtnResetBlacklist_Click(object sender, EventArgs e)
+        {
+            mailItemProcessor.ResetBlacklist();
+            File.WriteAllText(BlacklistFileName, "");
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
